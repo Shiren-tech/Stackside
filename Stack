@@ -1,0 +1,65 @@
+import java.util.Scanner;
+import java.util.Stack;
+
+class Casier {
+    String item;
+    int price, qty;
+
+    public Casier(String a, int b, int c) {
+        this.item = a;
+        this.price = b;
+        this.qty = c;
+    }
+
+    public int getSubtotal() {
+        return price * qty;
+    }
+}
+
+public class MainCasierStack {
+    public static void main(String[] args) {
+        Stack<Casier> product = new Stack<>();
+        Scanner input = new Scanner(System.in);
+
+        // Tambah data awal
+        product.push(new Casier("Bags", 100000, 2));
+        product.push(new Casier("Hat", 20000, 2));
+
+        String repeat;
+
+        do {
+            System.out.print("Name product: ");
+            String item = input.nextLine();
+
+            System.out.print("Price: ");
+            int price = input.nextInt();
+
+            System.out.print("Quantity: ");
+            int qty = input.nextInt();
+            input.nextLine();
+
+            product.push(new Casier(item, price, qty));
+
+            System.out.print("Add new data? (yes/no): ");
+            repeat = input.nextLine();
+
+        } while (repeat.equalsIgnoreCase("yes"));
+
+        System.out.println("\nNo\tItem\tPrice\tQty\tSubtotal");
+        System.out.println("=========================================");
+
+        int total = 0;
+        int i = product.size();
+        while (!product.isEmpty()) {
+            Casier p = product.pop();
+            System.out.println(i + ".\t" + p.item + "\t" + p.price + "\t" + p.qty + "\t" + p.getSubtotal());
+            total += p.getSubtotal();
+            i--;
+        }
+
+        System.out.println("=========================================");
+        System.out.println("Total: " + total);
+
+        input.close();
+    }
+}
